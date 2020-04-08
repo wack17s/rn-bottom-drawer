@@ -57,7 +57,17 @@ export default class BottomDrawer extends Component{
     /**
      * A callback function triggered when the drawer swiped into down position
      */
-    onCollapsed: PropTypes.func
+    onCollapsed: PropTypes.func,
+
+    /**
+     * A callback function triggered when the drawer swiped into close position
+     */
+    onClose: PropTypes.func,
+
+    /**
+     * Threshold to close drawer
+     */
+    closeThreshold: PropTypes.number
   }
 
   static defaultProps = {
@@ -96,14 +106,16 @@ export default class BottomDrawer extends Component{
         currentPosition = {this.state.currentPosition}
         setCurrentPosition = {(position) => this.setCurrentPosition(position)}
         toggleThreshold = {this.TOGGLE_THRESHOLD}
+        closeThreshold={this.props.closeThreshold}
+        onClose={this.props.onClose}
         upPosition = {this.UP_POSITION}
         downPosition = {this.DOWN_POSITION}
         roundedEdges = {this.props.roundedEdges}
         shadow = {this.props.shadow}
         containerHeight = {this.props.containerHeight}
         backgroundColor = {this.props.backgroundColor}
-        onExpanded = {() => this.props.onExpanded()}
-        onCollapsed = {() => this.props.onCollapsed()}
+        onExpanded = {this.props.onExpanded}
+        onCollapsed = {this.props.onCollapsed}
       >
         {this.props.children}
 

@@ -49,7 +49,11 @@ export default class Animator extends Component{
   }
 
   _handlePanResponderRelease = (e, gesture) => {
-    if (gesture.dy > this.props.toggleThreshold && this.props.currentPosition === this.props.upPosition) {
+    if (gesture.moveY > SCREEN_HEIGHT - this.props.closeThreshold) {
+      if (this.props.onClose) {
+        this.props.onClose();
+      }
+    } else if (gesture.dy > this.props.toggleThreshold && this.props.currentPosition === this.props.upPosition) {
       this._transitionTo(this.props.downPosition, this.props.onCollapsed);
     } else if (gesture.dy < -this.props.toggleThreshold && this.props.currentPosition === this.props.downPosition) {
       this._transitionTo(this.props.upPosition, this.props.onExpanded);
@@ -70,7 +74,7 @@ export default class Animator extends Component{
   _transitionTo(position, callback) {
     Animated.spring(this.position, {
       toValue: position
-    }).start(() => this.props.onExpanded());
+    }).start();
     
     this.props.setCurrentPosition(position);
     callback();
